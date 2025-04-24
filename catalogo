@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Catálogo de Produtos</title>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Filtro</h2>
+    <input type="text" id="filtro" placeholder="Buscar produto..." style="width: 100%; padding: 8px;">
+  </div>
+
+  <div class="content" id="catalogo">
+  </div>
+
+  <script>
+    const produtos = [
+      { id: 1, name: "Creatina", category: "Suplementos", price: 49.9 },
+      { id: 2, name: "Whey Protein", category: "Suplementos", price: 199.9 },
+      { id: 3, name: "Pré Treino", category: "Suplementos", price: 149.9 },
+      { id: 4, name: "Durateston", category: "Danones", price: 89.9 },
+      { id: 5, name: "Boné Preto", category: "Acessórios", price: 29.9 },
+    ];
+
+    const catalogo = document.getElementById("catalogo");
+    const filtroInput = document.getElementById("filtro");
+
+    function renderProdutos(lista) {
+      catalogo.innerHTML = "";
+      lista.forEach(produto => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+        card.innerHTML = `
+          <h3>${produto.name}</h3>
+          <p>Categoria: ${produto.category}</p>
+          <p><strong>R$ ${produto.price.toFixed(2)}</strong></p>
+          <button class="buy-button">Comprar</button>
+        `;
+        catalogo.appendChild(card);
+      });
+    }
+
+    filtroInput.addEventListener("input", () => {
+      const termo = filtroInput.value.toLowerCase();
+      const filtrados = produtos.filter(p => p.name.toLowerCase().includes(termo));
+      renderProdutos(filtrados);
+    });
+
+    renderProdutos(produtos);
+  </script>
+</body>
+</html>
